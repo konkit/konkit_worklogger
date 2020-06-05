@@ -1,7 +1,9 @@
 
 
-class Configuration
-  def path_prefix
-    "/Users/konkit/Workshop/worklogger/timeentries"
+class WorkLoggerConfiguration
+  attr_reader :path_prefix
+
+  def initialize(path_prefix)
+    @path_prefix = path_prefix
   end
 end

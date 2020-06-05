@@ -1,25 +1,6 @@
 require "csv"
 require_relative 'utils'
 
-class DaySummaryPrinter
-  def initialize(configuration)
-    @configuration = configuration
-  end
-
-  def print(year, month, day)
-    filename = "%s/%d-%02d-%02d.csv" % [@configuration.path_prefix, year, month, day]
-
-    entry = DayEntryLoader.new.load_from_file filename
-
-    for time_entry in entry.time_entries
-      puts "%s - %s\t%s" % [time_entry.start, time_entry.end, time_entry.branch]
-    end
-
-    date_string = "%d-%02d-%02d" % [year, month, day]
-    puts "%s: %s - %s (%s)" % [date_string, entry.start_time, entry.end_time, entry.time_today]
-  end
-end
-
 class DayEntry
   include Utils
   attr_reader :time_entries, :lines_count, :start_time, :end_time
@@ -49,8 +30,14 @@ end
 
 
 class DayEntryLoader
-  def load_from_file(path)
-    lines ||= CSV.readlines(path)
+  def initialize(configuration)
+    @configuration = configuration
+  end
+
+  def load_from_file(year, month, day)
+    filename = "%s/%d-%02d-%02d.csv" % [@configuration.path_prefix, year, month, day]
+
+    lines ||= CSV.readlines(filename)
 
     lines_count = lines.length
 
