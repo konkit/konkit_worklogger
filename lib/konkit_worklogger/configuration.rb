@@ -2,6 +2,6 @@
 
 class Configuration
   def path_prefix
-    "/tmp"
+    "/Users/konkit/Workshop/worklogger/timeentries"
   end
 end

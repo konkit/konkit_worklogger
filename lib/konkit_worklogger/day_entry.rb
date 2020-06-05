@@ -1,26 +1,49 @@
 require "csv"
+require_relative 'utils'
+
+class DaySummaryPrinter
+  def initialize(configuration)
+    @configuration = configuration
+  end
+
+  def print(year, month, day)
+    filename = "%s/%d-%02d-%02d.csv" % [@configuration.path_prefix, year, month, day]
+
+    entry = DayEntryLoader.new.load_from_file filename
+
+    for time_entry in entry.time_entries
+      puts "%s - %s\t%s" % [time_entry.start, time_entry.end, time_entry.branch]
+    end
+
+    date_string = "%d-%02d-%02d" % [year, month, day]
+    puts "%s: %s - %s (%s)" % [date_string, entry.start_time, entry.end_time, entry.time_today]
+  end
+end
 
 class DayEntry
-  attr_reader :time_entries, :lines_count
+  include Utils
+  attr_reader :time_entries, :lines_count, :start_time, :end_time
 
-  def initialize(time_entries, lines_count)
+  def initialize(time_entries, lines_count, start_time, end_time)
     @time_entries = time_entries
     @lines_count = lines_count
+    @start_time = start_time
+    @end_time = end_time
   end
 
   def time_today
-    full_hours = @lines_count / 60
-    min_str = (@lines_count - 60 * full_hours)
-    "%d:%02d" % [full_hours, min_str]
+    minutes_to_time(@lines_count)
   end
 end
 
 
 class TimeEntry
+  attr_reader :start, :end, :branch
+
   def initialize(time_start, time_end, current_branch)
     @start = time_start
     @end = time_end
-    @current_branch = current_branch
+    @branch = current_branch
   end
 end
 
@@ -54,6 +77,6 @@ class DayEntryLoader
 
     time_entries.append(TimeEntry.new(current_start_time, current_end_time, current_branch))
 
-    DayEntry.new(time_entries, lines_count)
+    DayEntry.new(time_entries, lines_count, start_time, end_time)
   end
 end
