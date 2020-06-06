@@ -1,7 +1,5 @@
 require "konkit_worklogger"
 require "rspec"
-require 'tempfile'
-require_relative 'utils'
 
 RSpec.describe MonthEntry do
 

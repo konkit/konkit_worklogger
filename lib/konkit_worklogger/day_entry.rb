@@ -17,18 +17,6 @@ class DayEntry
   end
 end
 
-
-class TimeEntry
-  attr_reader :start, :end, :branch
-
-  def initialize(time_start, time_end, current_branch)
-    @start = time_start
-    @end = time_end
-    @branch = current_branch
-  end
-end
-
-
 class DayEntryLoader
   def initialize(configuration)
     @configuration = configuration
@@ -53,16 +41,17 @@ class DayEntryLoader
 
     for line in lines
       if line[1] != current_branch
-        time_entries.append(TimeEntry.new(current_start_time, current_end_time, current_branch))
+        time_entries.append({start: current_start_time, end: current_end_time, branch: current_branch})
 
         current_branch = line[1]
         current_start_time = line[0]
+        current_end_time = line[0]
       else
         current_end_time = line[0]
       end
     end
 
-    time_entries.append(TimeEntry.new(current_start_time, current_end_time, current_branch))
+    time_entries.append({start: current_start_time, end: current_end_time, branch: current_branch})
 
     DayEntry.new(time_entries, lines_count, start_time, end_time)
   end

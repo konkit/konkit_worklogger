@@ -9,7 +9,7 @@ class DaySummaryPrinter
     entry = DayEntryLoader.new(@configuration).load_from_file(year, month, day)
 
     for time_entry in entry.time_entries
-      puts "%s - %s\t%s" % [time_entry.start, time_entry.end, time_entry.branch]
+      puts "%s - %s\t%s" % [time_entry[:start], time_entry[:end], time_entry[:branch]]
     end
 
     date_string = "%d-%02d-%02d" % [year, month, day]

@@ -19,6 +19,14 @@ class Worklogger < Thor
 
     MonthSummaryPrinter.new(configuration).print(today.year, today.month)
   end
+
+  desc "increment", "Do not run this manually. This is called to increment the minutes' counter"
+  def increment
+    configuration = WorkLoggerConfiguration::load
+    now = Time.now
+
+    Updater.new(configuration).write(now)
+  end
 end
 
 
