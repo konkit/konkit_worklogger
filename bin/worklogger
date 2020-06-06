@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+require "konkit_worklogger"
+require "thor"
+
+class Worklogger < Thor
+
+  desc "today", "Display today's work count"
+  def today
+    configuration = WorkLoggerConfiguration.new("/Users/konkit/Workshop/worklogger/timeentries")
+    today = Date.today
+
+    DaySummaryPrinter.new(configuration).print(today.year, today.month, today.day)
+  end
+
+  desc "month", "Display month's work count"
+  def month
+    configuration = WorkLoggerConfiguration.new("/Users/konkit/Workshop/worklogger/timeentries")
+    today = Date.today
+
+    MonthSummaryPrinter.new(configuration).print(today.year, today.month)
+  end
+end
+
+
+Worklogger.start

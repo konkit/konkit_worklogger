@@ -13,5 +13,6 @@
     <orderEntry type="library" scope="PROVIDED" name="rspec-expectations (v3.9.2, RVM: ruby-2.7.1 [worklogger]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rspec-mocks (v3.9.1, RVM: ruby-2.7.1 [worklogger]) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="rspec-support (v3.9.3, RVM: ruby-2.7.1 [worklogger]) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="thor (v1.0.1, RVM: ruby-2.7.1 [worklogger]) [gem]" level="application" />
   </component>
 </module>

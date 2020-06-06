@@ -26,10 +26,13 @@ class MonthSummaryPrinter
 
   def print(year, month)
     day_loader = DayEntryLoader.new(@configuration)
-    entry = MonthEntryLoader.new(day_loader).load(year, month)
+    month_loader = MonthEntryLoader.new(day_loader)
+    entry = month_loader.load(year, month)
+    balance_with_carry = month_loader.balance_with_carry(year, month)
 
     puts "Days worked this month: %d" % entry.days_worked
     puts "Total count of work hours: %s" % minutes_to_time(entry.time_in_month)
     puts "Balance in current month: %s " % minutes_to_time(entry.month_balance)
+    puts "Balance with carry in current month: %s " % minutes_to_time(balance_with_carry)
   end
 end
