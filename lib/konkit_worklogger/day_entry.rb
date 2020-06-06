@@ -3,17 +3,17 @@ require_relative 'utils'
 
 class DayEntry
   include Utils
-  attr_reader :time_entries, :lines_count, :start_time, :end_time
+  attr_reader :time_entries, :time_in_minutes, :start_time, :end_time
 
-  def initialize(time_entries, lines_count, start_time, end_time)
+  def initialize(time_entries, time_in_minutes, start_time, end_time)
     @time_entries = time_entries
-    @lines_count = lines_count
+    @time_in_minutes = time_in_minutes
     @start_time = start_time
     @end_time = end_time
   end
 
   def time_today
-    minutes_to_time(@lines_count)
+    minutes_to_time(@time_in_minutes)
   end
 end
 
