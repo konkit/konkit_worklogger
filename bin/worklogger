@@ -6,7 +6,7 @@ class Worklogger < Thor
 
   desc "today", "Display today's work count"
   def today
-    configuration = WorkLoggerConfiguration.new("/Users/konkit/Workshop/worklogger/timeentries")
+    configuration = WorkLoggerConfiguration::load
     today = Date.today
 
     DaySummaryPrinter.new(configuration).print(today.year, today.month, today.day)
@@ -14,7 +14,7 @@ class Worklogger < Thor
 
   desc "month", "Display month's work count"
   def month
-    configuration = WorkLoggerConfiguration.new("/Users/konkit/Workshop/worklogger/timeentries")
+    configuration = WorkLoggerConfiguration::load
     today = Date.today
 
     MonthSummaryPrinter.new(configuration).print(today.year, today.month)
