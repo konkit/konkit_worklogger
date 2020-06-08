@@ -4,10 +4,10 @@ require 'yaml'
 require 'fileutils'
 
 class WorkLoggerConfiguration
-  attr_reader :path_prefix
+  attr_reader :worklogger_path
 
-  def initialize(path_prefix)
-    @path_prefix = path_prefix
+  def initialize(worklogger_path)
+    @worklogger_path = worklogger_path
   end
 
   def self.load
@@ -16,7 +16,10 @@ class WorkLoggerConfiguration
     conf = if File.file?(config_path)
              config_file_content = IO.read(config_path)
              config = YAML.safe_load(config_file_content)
-             WorkLoggerConfiguration.new(config['path'])
+
+             worklogger_path = config['path']
+
+             WorkLoggerConfiguration.new(worklogger_path)
            else
              default_entries_path = '%s/.konkit_worklogger/timeentries' % Dir.home
 
@@ -24,11 +27,11 @@ class WorkLoggerConfiguration
                FileUtils.mkdir_p('%s/.konkit_worklogger/' % Dir.home)
              end
 
-             File.open(config_path, 'w') { |file| file.write({ 'path' => default_entries_path }.to_yaml) }
+             File.open(config_path, 'w') {|file| file.write({'path' => default_entries_path}.to_yaml)}
              WorkLoggerConfiguration.new(default_entries_path)
            end
 
-    FileUtils.mkdir_p(conf.path_prefix) unless File.directory?(conf.path_prefix)
+    FileUtils.mkdir_p(conf.worklogger_path) unless File.directory?(conf.worklogger_path)
 
     conf
   end

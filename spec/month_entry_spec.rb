@@ -31,6 +31,10 @@ RSpec.describe MonthEntry do
       it "should return correct value of current month's balance" do
         expect(subject.month_balance).to eq(0)
       end
+
+      it "should return correct day entries" do
+        expect(subject.day_entries).to eq({1 => 480, 2 => 480, 3 => 480})
+      end
     end
 
     describe("calculate_balance") do

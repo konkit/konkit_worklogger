@@ -14,11 +14,16 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 
-  def save_csv_file(conf, year, month, day, hours_at_work = 8)
+  def save_csv_file(conf, year, month, day, hours_at_work = 8, branch_name = 'master')
     File.open(Utils::get_filename(conf, year, month, day), "w") do |f|
       time_it = Time.new(year, month, day, 8, 0)
       begin
-        f.write("#{time_it.hour}:#{time_it.min}, master\n")
+        line_to_write = "%d:%02d" % [time_it.hour, time_it.min]
+
+        unless branch_name.nil? || branch_name.empty?
+          line_to_write += ", #{branch_name}"
+        end
+        f.write("#{line_to_write}\n")
       end while (time_it += 60) < Time.new(year, month, day, 8 + hours_at_work, 0)
     end
   end

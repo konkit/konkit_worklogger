@@ -1,5 +1,3 @@
-
-
 class Updater
   include Utils
 
@@ -11,7 +9,7 @@ class Updater
     file_path = get_filename(@configuration, time.year, time.month, time.day)
 
     CSV.open(file_path, "a+") do |csv|
-      csv << ["%d:%02d" % [time.hour, time.min], "master"]
+      csv << ["%d:%02d" % [time.hour, time.min]]
     end
   end
 end

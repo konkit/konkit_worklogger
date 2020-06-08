@@ -47,7 +47,6 @@ RSpec.describe DayEntry do
       expect(subject.time_today).to eq('0:05')
       expect(subject.start_time).to eq('10:00')
       expect(subject.end_time).to eq('13:01')
-      expect(subject.time_entries).to eq([{ start: '10:00', end: '13:01', branch: 'master' }])
     end
   end
 
@@ -73,12 +72,6 @@ RSpec.describe DayEntry do
       expect(subject.time_today).to eq('0:05')
       expect(subject.start_time).to eq('10:00')
       expect(subject.end_time).to eq('13:01')
-
-      expected_time_entries = [
-          { start: '10:00', end: '10:02', branch: 'master' },
-          { start: '13:00', end: '13:01', branch: 'other' }
-      ]
-      expect(subject.time_entries).to eq(expected_time_entries)
     end
   end
 
@@ -103,12 +96,25 @@ RSpec.describe DayEntry do
       expect(subject.time_today).to eq('0:04')
       expect(subject.start_time).to eq('10:00')
       expect(subject.end_time).to eq('13:00')
+    end
+  end
 
-      expected_time_entries = [
-          { start: '10:00', end: '10:02', branch: 'master' },
-          { start: '13:00', end: '13:00', branch: 'other' }
-      ]
-      expect(subject.time_entries).to eq(expected_time_entries)
+  context('when there is a file without any branch data') do
+    before(:each) do
+      save_csv_file(conf, 2020, 6, 1, 8, nil)
+    end
+
+    after(:all) do
+      delete_csv_file(conf, 2020, 6, 1)
+    end
+
+    subject { DayEntryLoader.new(conf).load_from_file(2020, 6, 1) }
+
+    it 'returns correct value for a single day file' do
+      expect(subject.time_in_minutes).to eq(8 * 60)
+      expect(subject.time_today).to eq('8:00')
+      expect(subject.start_time).to eq('8:00')
+      expect(subject.end_time).to eq('15:59')
     end
   end
 end

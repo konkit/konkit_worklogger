@@ -1,12 +1,13 @@
 require_relative 'utils'
 
 class MonthEntry
-  attr_reader :time_in_month, :days_worked, :month_balance
+  attr_reader :time_in_month, :days_worked, :month_balance, :day_entries
 
-  def initialize(time_in_month, days_worked, month_balance)
+  def initialize(time_in_month, days_worked, month_balance, day_entries)
     @time_in_month = time_in_month
     @days_worked = days_worked
     @month_balance = month_balance
+    @day_entries = day_entries
   end
 end
 
@@ -21,12 +22,16 @@ class MonthEntryLoader
     days_worked = 0
     month_balance = 0
 
+    day_entries = {}
+
     for day in 1..31
       begin
         day_entry = @day_loader.load_from_file(year, month, day)
 
         if !day_entry.nil?
           time_in_day = day_entry.time_in_minutes
+
+          day_entries[day] = time_in_day
           minutes_of_work += time_in_day
           days_worked += 1
           month_balance += time_in_day - (8 * 60)
@@ -37,7 +42,7 @@ class MonthEntryLoader
       end
     end
 
-    MonthEntry.new(minutes_of_work, days_worked, month_balance)
+    MonthEntry.new(minutes_of_work, days_worked, month_balance, day_entries)
   end
 
   def calculate_balance(year, month)

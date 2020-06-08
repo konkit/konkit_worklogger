@@ -20,7 +20,7 @@ RSpec.describe Updater do
 
       lines = CSV.readlines(get_filename(conf, 2020, 6, 6))
 
-      expect(lines).to eq([["12:00", "master"] ])
+      expect(lines).to eq([["12:00"] ])
     end
   end
 
@@ -31,7 +31,7 @@ RSpec.describe Updater do
 
     before(:each) do
       CSV.open(get_filename(conf, 2020, 6, 6), "w") do |csv|
-        csv << ["11:59", "master"]
+        csv << ["11:59"]
       end
     end
 
@@ -42,7 +42,7 @@ RSpec.describe Updater do
 
       lines = CSV.readlines(get_filename(conf, 2020, 6, 6))
 
-      expect(lines).to eq([["11:59", "master"], ["12:00", "master"] ])
+      expect(lines).to eq([["11:59"], ["12:00"] ])
     end
   end
 end

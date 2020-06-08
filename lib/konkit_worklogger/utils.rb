@@ -9,6 +9,8 @@ module Utils
   end
 
   def get_filename(conf, year, month, day)
-    "%s/%d-%02d-%02d.csv" % [conf.path_prefix, year, month, day]
+    folder_path = "%s/%d-%02d" % [conf.worklogger_path, year.to_i, month.to_i]
+    FileUtils.mkdir_p(folder_path) unless File.directory?(folder_path)
+    "%s/%02d.csv" % [folder_path, day.to_i]
   end
 end
