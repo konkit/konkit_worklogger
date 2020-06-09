@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'utils'
 
 class MonthEntry
@@ -11,7 +13,6 @@ class MonthEntry
   end
 end
 
-
 class MonthEntryLoader
   def initialize(day_loader)
     @day_loader = day_loader
@@ -24,11 +25,11 @@ class MonthEntryLoader
 
     day_entries = {}
 
-    for day in 1..31
+    (1..31).each do |day|
       begin
         day_entry = @day_loader.load_from_file(year, month, day)
 
-        if !day_entry.nil?
+        unless day_entry.nil?
           time_in_day = day_entry.time_in_minutes
 
           day_entries[day] = time_in_day
@@ -36,8 +37,6 @@ class MonthEntryLoader
           days_worked += 1
           month_balance += time_in_day - (8 * 60)
         end
-
-
       rescue Errno::ENOENT
       end
     end
@@ -54,10 +53,10 @@ class MonthEntryLoader
 
   def balance_with_carry(year, month)
     current_month_entry = load(year, month)
-    previous_month_entry = load(year, month-1)
+    previous_month_entry = load(year, month - 1)
 
     if previous_month_entry.days_worked != 0
-      current_month_entry.month_balance + balance_with_carry(year, month-1)
+      current_month_entry.month_balance + balance_with_carry(year, month - 1)
     else
       current_month_entry.month_balance
     end

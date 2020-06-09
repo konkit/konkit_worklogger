@@ -1,20 +1,17 @@
-# frozen_string_literal: true
-
 require 'yaml'
 require 'fileutils'
 
 class WorkLoggerConfiguration
   attr_reader :worklogger_path
 
-  def initialize(worklogger_path)
+  def initialize(worklogger_path, config_path = nil)
     @worklogger_path = worklogger_path
+    @config_path = config_path || '%s/.konkit_worklogger/config.yml' % Dir.home
   end
 
   def self.load
-    config_path = '%s/.konkit_worklogger/config.yml' % Dir.home
-
-    conf = if File.file?(config_path)
-             config_file_content = IO.read(config_path)
+    conf = if File.file?(@config_path)
+             config_file_content = IO.read(@config_path)
              config = YAML.safe_load(config_file_content)
 
              worklogger_path = config['path']
@@ -27,7 +24,7 @@ class WorkLoggerConfiguration
                FileUtils.mkdir_p('%s/.konkit_worklogger/' % Dir.home)
              end
 
-             File.open(config_path, 'w') {|file| file.write({'path' => default_entries_path}.to_yaml)}
+             File.open(@config_path, 'w') {|file| file.write({'path' => default_entries_path}.to_yaml)}
              WorkLoggerConfiguration.new(default_entries_path)
            end
 
