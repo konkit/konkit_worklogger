@@ -22,7 +22,7 @@ rvm use ...
 ### Step 1 - install the gem
 
 ```
-gem install konkit-worklogger
+gem install konkit_worklogger
 ```
 
 
