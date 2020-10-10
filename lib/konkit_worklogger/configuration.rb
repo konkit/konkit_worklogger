@@ -4,14 +4,15 @@ require 'fileutils'
 class WorkLoggerConfiguration
   attr_reader :worklogger_path
 
-  def initialize(worklogger_path, config_path = nil)
+  def initialize(worklogger_path)
     @worklogger_path = worklogger_path
-    @config_path = config_path || '%s/.konkit_worklogger/config.yml' % Dir.home
   end
 
   def self.load
-    conf = if File.file?(@config_path)
-             config_file_content = IO.read(@config_path)
+    config_path = '%s/.konkit_worklogger/config.yml' % Dir.home
+
+    conf = if File.file?(config_path)
+             config_file_content = IO.read(config_path)
              config = YAML.safe_load(config_file_content)
 
              worklogger_path = config['path']
