@@ -19,7 +19,7 @@ RSpec.describe DayEntry do
 
     subject { DayEntryLoader.new(conf).load_from_file(2020, 6, 1) }
 
-    it 'returns correct time in minutes' do
+    it 'should return correct time in minutes' do
       expect(subject.time_in_minutes).to eq(60 * 8)
     end
 

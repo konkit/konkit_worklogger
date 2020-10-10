@@ -24,7 +24,7 @@ class WorkLoggerConfiguration
                FileUtils.mkdir_p('%s/.konkit_worklogger/' % Dir.home)
              end
 
-             File.open(@config_path, 'w') {|file| file.write({'path' => default_entries_path}.to_yaml)}
+             File.open(@config_path, 'w') { |file| file.write({ 'path' => default_entries_path }.to_yaml) }
              WorkLoggerConfiguration.new(default_entries_path)
            end
 
