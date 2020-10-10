@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.email         = ['konkit@gmail.com']
 
   spec.summary       = 'Worklogger'
-  spec.description   = 'Log data with Cron'
+  spec.description   = 'Log your time of work automatically with a mechanism based on Cron.'
   spec.homepage      = 'https://github.com/konkit/konkit_worklogger'
   spec.license       = 'MIT'
   spec.required_ruby_version = Gem::Requirement.new('>= 2.3.0')
@@ -28,5 +28,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency('rake', '~> 12.0')
   spec.add_development_dependency('rspec', '~> 3.0')
-  spec.add_dependency('thor')
+  spec.add_dependency('thor', '~> 1.0')
 end
