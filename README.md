@@ -13,7 +13,7 @@ Because of that, it works even if you have to pause the work for some time - you
 
 # Installation
 
-### Step 0 - if you use RVM - setup the correct ruby version
+### Step 0 - setup the correct ruby version with RVM
 
 ```
 rvm use ...
